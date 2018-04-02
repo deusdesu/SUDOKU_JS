@@ -84,7 +84,7 @@ for (var i = 1; i <= 81; i++) {
         /* okresla czy wystepuje gdzies wsrod pozycjaX[i], pozycjaY[i] lub CUBE[i]
 		wg wzoru value_around[0] nic nie znaczy, value_around[1] oznacza czy wartosc 1 wystepuje gdzies wsrod pozycjaX[1], pozycjaY[1] lub CUBE[1], reszta analogicznie aż do value_around[9].
 		*/
-    }
+    };
     // przYpisuje odpowiednie wartosci X. Dla pierwszego poziomu X = 1, dla drugiego poziomu X = 2, etc etc od dziewiatego X = 9;
     if (i <= 9) {
         obiekt[i].X = 1;
@@ -167,7 +167,7 @@ for (i = 1; i <= 81; i++) {
 }
 
 //onclick dla przycisku
-document.getElementById("input_button").addEventListener("click", send_nudes_yhm_numers)
+document.getElementById("input_button").addEventListener("click", send_nudes_yhm_numers);
 var czy_false = 0;
 //var pierwsze_klikniecie = false;
 
@@ -239,12 +239,12 @@ function szukajka(numer) {
 
         // dla obiekt[numer].ilosc_mozliwosci == 1 szuka, która wartosc nie znajduje się w wsrod pozycjaX[numer], pozycjaY[numer] lub CUBE[numer], czyli szuka które value_around == false;
         if (obiekt[numer].ilosc_mozliwosci == 1) {
-            for (var i = 1; i <= 9; i++) {
+            for ( i = 1; i <= 9; i++) {
                 if (obiekt[numer].value_around[i] == false) {
                     pomoc = i;
                 }
             }
-            document.getElementById("id" + numer).value = pomoc
+            document.getElementById("id" + numer).value = pomoc;
         }
         //alert(obiekt[numer].ilosc_mozliwosci);
         //alert(obiekt[numer].value_around[ obiekt[ pozycjaX[obiekt[numer].X][i] ].value ]);

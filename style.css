@@ -1,0 +1,18 @@
+body{
+	background-color: #666;
+}
+
+input{
+	width: 20px;
+	text-align:center;
+	border: 1px solid #aaa;
+}
+input[type="submit"]{
+	width: 234px;
+}
+
+#pole_sudoku{
+	margin-left: auto;
+	margin-right: auto;
+	width: 220px;
+}

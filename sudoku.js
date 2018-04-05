@@ -8,14 +8,14 @@
  * należY rozróżniać kafelki wg pionu(Y), poziomu(X) wg małego 9 pólowego kwadratu (nazYwanY później kwadratem, lub CUBE)
  *
  * liczba powinna zostać wpisana gdY:
- * 		#w pionie, poziomie lub/i kwadracie została tYlko ta jedna liczba
- * 		#inne, trudniejsze zależnosci heh
+ *      #w pionie, poziomie lub/i kwadracie została tYlko ta jedna liczba
+ *      #inne, trudniejsze zależnosci heh
  *
  * tablice pomocnicze, poziomu, pionu i małego 9 pólowego kwadratu
  *
  * dodac kontrole poprawnosci tj czy liczby sa unikalne wg pozycjaX[], pozycjaY[] i CUBE[]
  *
-	* jeżeli obiekt[i].value == '' szuka obiekt[i].value_around, które == false i sprawdza,
+    * jeżeli obiekt[i].value == '' szuka obiekt[i].value_around, które == false i sprawdza,
     * czy inne obiekty w wg CUBE też maja false, przy tym samym numerze, jeżeli nie to
     *  wstawia liczbe, przy krórej jest false xd
     *
@@ -80,8 +80,8 @@ for (var i = 1; i <= 81; i++) {
         value_around: [0, false, false, false, false, false, false, false, false, false],
         co_zostalo: "" // tu powinna zostać wpisana ostatnia liczba (czyli ta przy której .ilosc_mozliwosci = 1, czyli jest tylko 1 false przy .value_around;
         /* okresla czy wystepuje gdzies wsrod pozycjaX[i], pozycjaY[i] lub CUBE[i]
-		wg wzoru value_around[0] nic nie znaczy, value_around[1] oznacza czy wartosc 1 wystepuje gdzies wsrod pozycjaX[1], pozycjaY[1] lub CUBE[1], reszta analogicznie aż do value_around[9].
-		*/
+        wg wzoru value_around[0] nic nie znaczy, value_around[1] oznacza czy wartosc 1 wystepuje gdzies wsrod pozycjaX[1], pozycjaY[1] lub CUBE[1], reszta analogicznie aż do value_around[9].
+        */
     };
     // przYpisuje odpowiednie wartosci X. Dla pierwszego poziomu X = 1, dla drugiego poziomu X = 2, etc etc od dziewiatego X = 9;
     if (i <= 9) {
@@ -180,11 +180,11 @@ function send_nudes_yhm_numers() {
         value[i] = document.getElementById("id" + i).value; // linia testowa nwm czy będzie miała zastosowanie
         obiekt[i].value = document.getElementById("id" + i).value;
         if(obiekt[i].value != ''){
-        	obiekt[i].ilosc_mozliwosci = 0;
-        	for (o = 1; o <= 9; o++) {
-        		obiekt[i].value_around[o] = true;
-        	}
-            //szukaj_i_zmniejsz(i);
+            obiekt[i].ilosc_mozliwosci = 0;
+            for (o = 1; o <= 9; o++) {
+                obiekt[i].value_around[o] = true;
+            }
+            szukaj_i_zmniejsz(i);
         }
     }
    /* if (pierwsze_klikniecie == false) {
@@ -227,13 +227,13 @@ function szukaj_i_zmniejsz(numer){ // zmiejsza wartosci obiektów w tym samycm p
             obiekt[pozycjaY[numerY][u]].value_around[wartosc] = true; //wstawia do wszystkich obiektów w tym o tej samej pozycjiY .value_around[wartosc]
             
         }
-        if(obiekt[CUBE[numerCUBE][u]].ilosc_mozliwosci != 0){ // wszędzie, oprócz wczeniej liczby ( numer != pozycjaY[numerY][i] && )+ oiekt nie ma .value
+        /*if(obiekt[CUBE[numerCUBE][u]].ilosc_mozliwosci != 0){ // wszędzie, oprócz wczeniej liczby ( numer != pozycjaY[numerY][i] && )+ oiekt nie ma .value
             if(obiekt[CUBE[numerCUBE][u]].value_around[wartosc] == false){ // przy wielu kliknięciach .ilosc_wartosci nie zostanie zmiejszona do 0
                 obiekt[CUBE[numerCUBE][u]].ilosc_mozliwosci--;
             }
             obiekt[CUBE[numerCUBE][u]].value_around[wartosc] = true; //wstawia do wszystkich obiektów w tym o tej samej pozycjiY .value_around[wartosc]
             
-        }
+        }*/
 
     }
 }

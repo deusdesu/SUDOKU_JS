@@ -15,7 +15,13 @@
  *
  * dodac kontrole poprawnosci tj czy liczby sa unikalne wg pozycjaX[], pozycjaY[] i CUBE[]
  *
-	* jeżeli obiekt[i].value == '' szuka obiekt[i].value_around, które == false i sprawdza, czy inne obiekty w wg CUBE też maja false, przy tym samym numerze, jeżeli nie to wstawia liczbe, przy krórej jest false xd
+	* jeżeli obiekt[i].value == '' szuka obiekt[i].value_around, które == false i sprawdza,
+    * czy inne obiekty w wg CUBE też maja false, przy tym samym numerze, jeżeli nie to
+    *  wstawia liczbe, przy krórej jest false xd
+    *
+ *
+ *     szukaj_pustych(); //szuka pustych pól, może lepiej będzie działać na zapisanych polach?
+ *     np tworzac odpowiednia funkcje?
  */
 // ZMIENNE GLOBALNE ---------------------------------------------------------------------
 // tablica poziomu,  numer_pozycji = [liczby w danej pozycji]
@@ -70,17 +76,9 @@ for (var i = 1; i <= 81; i++) {
         Y: 0, // okresla w którym pozycjaY_ znajduje się obiekt, domyslnie 0, czyli nigdzie
         CUBE: 0, // okresla w którym CUBE_ znajduje się obiekt, domyslnie 0, czyli nigdzie
         value: '', // okresla jaka wartosc ma obiekt[i]
-        /*value1: '',	// okresla czy wartosc 1 wystepuje gdzies wsrod pozycjaX_i, pozycjaY_i lub CUBE_i
-        value2: '',	// analogicznie jak powyzej
-        value3: '',
-        value4: '',
-        value5: '',
-        value6: '',
-        value7: '',
-        value8: '',
-        value9: '',*/
         ilosc_mozliwosci: 9, // zmiejsza się ze każdym razem, gdy zostawnie przyznana wartosc true dla "obiekt[i].value_around"
-        value_around: [0, false, false, false, false, false, false, false, false, false]
+        value_around: [0, false, false, false, false, false, false, false, false, false],
+        co_zostalo: "" // tu powinna zostać wpisana ostatnia liczba (czyli ta przy której .ilosc_mozliwosci = 1, czyli jest tylko 1 false przy .value_around;
         /* okresla czy wystepuje gdzies wsrod pozycjaX[i], pozycjaY[i] lub CUBE[i]
 		wg wzoru value_around[0] nic nie znaczy, value_around[1] oznacza czy wartosc 1 wystepuje gdzies wsrod pozycjaX[1], pozycjaY[1] lub CUBE[1], reszta analogicznie aż do value_around[9].
 		*/
@@ -154,7 +152,7 @@ for (var i = 1; i <= 81; i++) {
 //wstawia pola sudoku
 var kafelek = '';
 for (i = 1; i <= 81; i++) {
-    kafelek = kafelek + '<input id="id' + i + '" maxlength="1" type="text" />';
+    kafelek = kafelek + '<input id="id' + i + '" maxlength="1" type="text" value=""/>';
     if (i % 9 == 0) kafelek = kafelek + '<div style="clear:both;"></div>';
 }
 kafelek = kafelek + '<div style="clear:both;"></div>';
@@ -175,7 +173,7 @@ var czy_false = 0;
 
 /**
  * [send_nudes_yhm_numers description] wstawia w tablice value[] wartosci wg wpisanych liczb
- * @return {[type]} [description] odsyła do funkcji wstaw_liczby()
+ * @return {[type]} [description] odsyła do funkcji szukaj_pustych()
  */
 function send_nudes_yhm_numers() {
     for (i = 1; i <= 81; i++) {
@@ -186,20 +184,62 @@ function send_nudes_yhm_numers() {
         	for (o = 1; o <= 9; o++) {
         		obiekt[i].value_around[o] = true;
         	}
-
+            //szukaj_i_zmniejsz(i);
         }
     }
    /* if (pierwsze_klikniecie == false) {
         //zmiejsz_ilosc_mozliwosci();
     }*/
-    wstaw_liczby();
-
+   // szukaj_pustych(); //szuka pustych pól, może lepiej będzie działać na zapisanych polach?
+   //znajdz_numer();
   //  pierwsze_klikniecie = true;
 }
 
+/**
+ * [znajdz_numer description] szuka numeru i dla kazdego pola w tym samym poziomie, pionie i cube
+ * @return {[type]} [description]
+ */
+function znajdz_numer(){
+    for (i = 1; i <= 81; i++) { // 9 zamienić na81---------------------------------------------------------------------
+        if (obiekt[i].value != '' && isNaN(obiekt[i].value) == false) {
+            szukaj_i_zmniejsz(i);
+        }
+    }
+}
 
-// szuka pustych pól
-function wstaw_liczby() {
+function szukaj_i_zmniejsz(numer){ // zmiejsza wartosci obiektów w tym samycm poionie, poziomie i CUBE
+    numerX = obiekt[numer].X;
+    numerY = obiekt[numer].Y;
+    numerCUBE = obiekt[numer].CUBE;
+    wartosc  = obiekt[numer].value;
+    for (u = 0; u <= 8; u++) {
+        if(obiekt[pozycjaX[numerX][u]].ilosc_mozliwosci != 0){ // wszędzie, oprócz wczeniej liczby ( numer != pozycjaX[numerX][i] && )+ oiekt nie ma .value
+            if(obiekt[pozycjaX[numerX][u]].value_around[wartosc] == false){ // przy wielu kliknięciach .ilosc_wartosci nie zostanie zmiejszona do 0
+                obiekt[pozycjaX[numerX][u]].ilosc_mozliwosci--;
+            }
+            obiekt[pozycjaX[numerX][u]].value_around[wartosc] = true; //wstawia do wszystkich obiektów w tym o tej samej pozycjiX .value_around[wartosc]
+            
+        }
+        if(obiekt[pozycjaY[numerY][u]].ilosc_mozliwosci != 0){ // wszędzie, oprócz wczeniej liczby ( numer != pozycjaY[numerY][i] && )+ oiekt nie ma .value
+            if(obiekt[pozycjaY[numerY][u]].value_around[wartosc] == false){ // przy wielu kliknięciach .ilosc_wartosci nie zostanie zmiejszona do 0
+                obiekt[pozycjaY[numerY][u]].ilosc_mozliwosci--;
+            }
+            obiekt[pozycjaY[numerY][u]].value_around[wartosc] = true; //wstawia do wszystkich obiektów w tym o tej samej pozycjiY .value_around[wartosc]
+            
+        }
+        if(obiekt[CUBE[numerCUBE][u]].ilosc_mozliwosci != 0){ // wszędzie, oprócz wczeniej liczby ( numer != pozycjaY[numerY][i] && )+ oiekt nie ma .value
+            if(obiekt[CUBE[numerCUBE][u]].value_around[wartosc] == false){ // przy wielu kliknięciach .ilosc_wartosci nie zostanie zmiejszona do 0
+                obiekt[CUBE[numerCUBE][u]].ilosc_mozliwosci--;
+            }
+            obiekt[CUBE[numerCUBE][u]].value_around[wartosc] = true; //wstawia do wszystkich obiektów w tym o tej samej pozycjiY .value_around[wartosc]
+            
+        }
+
+    }
+}
+
+// szuka pustych pól, WCZESNIEJ NAZYWAŁA SIĘ wstaw_liczby()
+function szukaj_pustych() {
     for (i = 1; i <= 81; i++) { // 9 zamienić na81---------------------------------------------------------------------
         if (obiekt[i].value == '') {
             szukajka(i);
